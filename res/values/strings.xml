@@ -2,4 +2,10 @@
 <resources>
     <string name="hello">Hello World, BoulderWeather!</string>
     <string name="app_name">Boulder Weather</string>
+    <string-array name="prepStrings">
+    	<item>Current</item>
+    	<item>Minimum</item>
+    	<item>Maximum</item>
+    	<item>Average</item>
+    </string-array>
 </resources>
