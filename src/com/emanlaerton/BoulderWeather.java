@@ -36,7 +36,6 @@ public class BoulderWeather extends Activity {
 	
 			public void onClick(View v) {
 				getWeather(date,"http://foehn.colorado.edu/weather/atoc1/");
-				//getWeather(date,"testing");
 			}
 	    	
 	    });
@@ -47,37 +46,15 @@ public class BoulderWeather extends Activity {
 		final int MAX = 2;
 		final int AVERAGE = 3;
 		Map<String,List<String>> map = null;
-    	if(url == "testing"){
-    		Log.i(prefix,"Testing mode");
-	    	try{
-	    		File f = new File(Environment.getExternalStorageDirectory()+"/atoc1.html");
-	    		if(!f.exists())
-	    			Log.w(prefix,"File not found");
-	    		FileInputStream fileIS = new FileInputStream(f);
-	    		BufferedReader buf = new BufferedReader(new InputStreamReader(fileIS));
-	            StringBuilder str = new StringBuilder();
-	            String line = null;
-	            while((line = buf.readLine()) != null){
-	                str.append(line + "\n");
-	            }
-	            fileIS.close();
-	            String result = str.toString();
-	    		map = WeatherHelper.parseSavedAtoc(result);
-	    	}catch (Exception e){
-	    		date.setText("Failed to get data:"+e.toString());
-	    		return false;
-	    	}
-    	}else{
 		HttpClient client = new DefaultHttpClient();
 		HttpGet request = new HttpGet(url);
-			try{
-				HttpResponse response = client.execute(request);
-				map = WeatherHelper.request(response);
-			}catch(Exception ex){
-				date.setText("Failed to get data:"+ex.toString());
-				return false;
-			}
-    	}
+		try{
+			HttpResponse response = client.execute(request);
+			map = WeatherHelper.request(response);
+		}catch(Exception ex){
+			date.setText("Failed to get data:"+ex.toString());
+			return false;
+		}
 		//TODO: replace this and "delims" in WeatherHelper.java with a proper thing in strings.xml
 		if(map==null){
 			Log.w(prefix,"Warning, Map was not returned properly!");
