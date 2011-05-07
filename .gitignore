@@ -1,0 +1,18 @@
+# Android Generated Folders #
+bin
+gen
+
+# Compiled Stuff #
+*.class
+*.dex
+
+# Logs and DBs #
+*.log
+*.sql
+*.sqlite
+
+# OS files #
+.DS_Store?
+ehthumbs.db
+Icon?
+thumbs.db
