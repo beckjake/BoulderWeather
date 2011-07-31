@@ -8,7 +8,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,14 +18,13 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class BoulderWeather extends Activity {
-
-	private static final String prefix = "BoulderWeather";
+	final TextView date = (TextView) findViewById(R.id.weather_date);;
+	private static final String prefix = "BoxulderWeather";
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //final TextView 
-        final TextView date = (TextView) findViewById(R.id.weather_date);
+        super.onCreate(savedInstanceState); 
+        //final TextView date = (TextView) findViewById(R.id.weather_date);
         setContentView(R.layout.main);
         Button refresh = (Button) findViewById(R.id.refresh_button);
 	    refresh.setOnClickListener(new View.OnClickListener(){
@@ -36,6 +34,13 @@ public class BoulderWeather extends Activity {
 			}
 	    	
 	    });
+    }
+    /** Called when the activity is started **/
+    @Override
+    public void onStart(){
+    	super.onStart();
+    	getWeather(date,"http://foehn.colorado.edu/weather/atoc1/");
+    	
     }
     private boolean getWeather(TextView date, String url){
 		Map<String,List<String>> map = null;
