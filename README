@@ -1,2 +1,3 @@
 Gets weather from http://foehn.colorado.edu/weather/atoc1/ and displays (some of) it in readable form on your android device.
-Version: 1.0beta3
+Version: 1.0beta3notfixed
+Original crash on start fixed, working on crashes on screen rotate... just don't rotate the screen for now

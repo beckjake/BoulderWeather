@@ -11,6 +11,11 @@ import java.io.InputStreamReader;
 import org.apache.http.HttpResponse;
 import android.util.Log;
 
+/*
+ * This function scrapes the page it is passed (sure hope it's the atoc1 page) and converts it into a Map
+ * The map is indexed by strings, each string maps to a list of strings: current value, min value, max value, average value
+ * Isn't that nice?
+ */
 public class WeatherHelper {
 	private final static String prefix = "WeatherHelper";
     public static Map<String,List<String>> request(HttpResponse response){
@@ -68,12 +73,13 @@ public class WeatherHelper {
     		values.add(date);
     		map.put("Date", values);
     		
-    		
+    		//we only want 7 rows
     		for(int i=0;i<7;i++){
     			values = new ArrayList<String>();
     			endCut = pageHTML.indexOf(delims[0]);
     			Label = pageHTML.substring(0, endCut).trim();
     			pageHTML = pageHTML.substring(endCut+delims[0].length());
+    			//delims.length=4 I think (cur, min, max, avg)
     			for(int j=0;j<(delims.length-1);j++){
     				endCut = pageHTML.indexOf(delims[j+1]);
     				String addval = pageHTML.substring(0,endCut).replaceAll("[ \t]",""); 
