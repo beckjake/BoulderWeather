@@ -1,0 +1,12 @@
+v 1.0beta3
+	- totally broken build that introduced crash on start (whoops)
+
+v 1.0beta3notfixed
+	- semi-broken build
+	- moved the crash on start to crash on screen rotation
+	- implemented a very poor (see above) implementation of caching.
+
+v 1.0beta4
+	- fixed crash on rotating the screen
+	- major refactoring, sucks a little bit less now
+	- removed caching

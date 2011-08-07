@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.*;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.apache.http.HttpResponse;
 import android.util.Log;
 
 /*
- * This function scrapes the page it is passed (sure hope it's the atoc1 page) and converts it into a Map
- * The map is indexed by strings, each string maps to a list of strings: current value, min value, max value, average value
- * Isn't that nice?
+ * This function scrapes the page it is passed (sure hope it's the atoc1 page) and converts it into a WeatherMap.
  */
 public class WeatherHelper {
 	private final static String prefix = "WeatherHelper";
-    public static Map<String,List<String>> request(HttpResponse response){
+	public static WeatherMap read(HttpResponse response){
+		return parseAtoc(request(response));
+	}
+    public static String request(HttpResponse response){
         String result = "";
         try{
             InputStream in = response.getEntity().getContent();
@@ -33,10 +33,11 @@ public class WeatherHelper {
         }catch(Exception ex){
         	result = "Error";
         }
-        return parseAtoc(result);
-        //return result;
+        return result;
 	}
-    public static Map<String,List<String>> parseAtoc(String pageHTML){
+    
+    //Ugh.
+    public static WeatherMap parseAtoc(String pageHTML){
     	String date="";
     	String labelLine = "<tr bgcolor=#> <th align=left>"; 
     	String currentLine = "</th> <td align=center>";
@@ -47,7 +48,7 @@ public class WeatherHelper {
     	String delims[] = {currentLine,minLine,maxLine,avgLine,endLine};
     	String Label;
     	List<String> values = new ArrayList<String>();
-    	Map<String,List<String>> map = new LinkedHashMap<String,List<String>>();
+    	WeatherMap wm = null;
     	Log.i(prefix,"pageHTML size: "+pageHTML.length());
     	try {
     		int startCut = pageHTML.indexOf("<table border");
@@ -70,8 +71,7 @@ public class WeatherHelper {
     		startCut = pageHTML.indexOf(labelLine);
     		pageHTML = pageHTML.substring(startCut+labelLine.length());
     		
-    		values.add(date);
-    		map.put("Date", values);
+    		wm = new WeatherMap(date);
     		
     		//we only want 7 rows
     		for(int i=0;i<7;i++){
@@ -79,7 +79,7 @@ public class WeatherHelper {
     			endCut = pageHTML.indexOf(delims[0]);
     			Label = pageHTML.substring(0, endCut).trim();
     			pageHTML = pageHTML.substring(endCut+delims[0].length());
-    			//delims.length=4 I think (cur, min, max, avg)
+    			//delims.length=4, or so we hope (cur, min, max, avg)
     			for(int j=0;j<(delims.length-1);j++){
     				endCut = pageHTML.indexOf(delims[j+1]);
     				String addval = pageHTML.substring(0,endCut).replaceAll("[ \t]",""); 
@@ -89,9 +89,7 @@ public class WeatherHelper {
     			}
         		startCut = pageHTML.indexOf(labelLine);
         		pageHTML = pageHTML.substring(startCut+labelLine.length());
-    			if(map.containsValue(values))
-    				Log.w(prefix,"Already in map, you done goofed");
-    			map.put(Label, values);
+    			wm.insertValues(Label, values);
     		}
     		
 		} catch (Exception e) {
@@ -99,6 +97,6 @@ public class WeatherHelper {
 			e.printStackTrace();
 		}
 		//Log.i(prefix,"Result: "+pageHTML);
-    	return map;
+    	return wm;
     }
 } 

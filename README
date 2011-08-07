@@ -1,3 +1,6 @@
 Gets weather from http://foehn.colorado.edu/weather/atoc1/ and displays (some of) it in readable form on your android device.
-Version: 1.0beta3notfixed
-Original crash on start fixed, working on crashes on screen rotate... just don't rotate the screen for now
+Version: 1.0beta4
+
+TODO:
+	make it not look like shit after screen rotation (should be easy-ish)
+	get the last couple lines of the table (currently ignored)
