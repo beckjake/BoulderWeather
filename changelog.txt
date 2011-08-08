@@ -10,3 +10,7 @@ v 1.0beta4
 	- fixed crash on rotating the screen
 	- major refactoring, sucks a little bit less now
 	- removed caching
+
+V 1.0
+	- fixed screen rotation looking silly
+	- "final" 1.0 release

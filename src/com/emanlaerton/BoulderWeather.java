@@ -8,6 +8,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +28,7 @@ public class BoulderWeather extends Activity {
 	TextView date = null;
 	private static long lastRefresh=0;
 	private static final String prefix = "BoulderWeather";
-	private WeatherMap weatherMap = null; //A Map of the weather, get it? I kill me.
+	private volatile static WeatherMap weatherMap = null; //A Map of the weather, get it? I kill me.
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,9 +51,14 @@ public class BoulderWeather extends Activity {
     @Override
     public void onStart(){
     	super.onStart();
-    	if(date!=null){
+    	if(date!=null){ //just in case
     		return;
     	}
+    	refreshIfTimerElapsed();
+    	
+    }
+    
+    public void refreshIfTimerElapsed(){
     	long currentTime=SystemClock.elapsedRealtime();
     	if (lastRefresh==0){
     		lastRefresh=currentTime;
@@ -68,14 +74,13 @@ public class BoulderWeather extends Activity {
     	else {
     		Log.i(prefix,"else statement hit!");
     		//if we've got the weather stored, use that. otherwise, we'll have to get it again.
-    		if(weatherMap==null){
+    		if(weatherMap==null){ //this indicates Dalvik went and destroyed my activity. Time to rebuild the map.
     			Log.i(prefix,"Getting the weather even though it should be stored");
     			lastRefresh=currentTime;
     			weatherMap = getWeather(ATOC_URL);
     		}
     		drawScreen(weatherMap);
     	}
-    	
     }
     
     /* make a WeatherHelper and use it request our nice map */

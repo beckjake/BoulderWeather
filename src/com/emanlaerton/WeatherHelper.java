@@ -2,9 +2,7 @@ package com.emanlaerton;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.apache.http.HttpResponse;
