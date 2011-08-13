@@ -15,5 +15,7 @@ V 1.0
 	- fixed screen rotation looking silly
 	- "final" 1.0 release
 
-v 1.1beta1
+v 1.1
 	- Added menu functionality
+	- Added support for remaining table rows
+

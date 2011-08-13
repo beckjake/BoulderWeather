@@ -128,15 +128,15 @@ public class BoulderWeather extends Activity {
 	        for(String s: wm.keys()){
 	        	Log.i(prefix,"Stat: "+s);
 	        	Log.i(prefix, "Value: "+wm.getValues(s));
-	        	if(wm.getValues(s).size()==4){
-	        		HashMap<String, String> prepMap = new HashMap<String, String>();
-		        	prepMap.put("Type", s);
-		        	List<String> rowString = wm.getValues(s);
-		        	for(int i=0;i<4;i++){
-			        	prepMap.put(ps[i],rowString.get(i));
-		        	}
-		        	filledMaps.add(prepMap);	
-	        	}
+	        	
+	        	//This is pretty brittle
+	    		HashMap<String, String> prepMap = new HashMap<String,String>();
+	    		prepMap.put("Type", s);
+	    		List<String> rowString = wm.getValues(s);
+	    		for(int i=0;i<wm.getValues(s).size();i++){
+	    			prepMap.put(ps[i],rowString.get(i));
+	    		}
+	    		filledMaps.add(prepMap);
 	        }
 	        SimpleAdapter adapter = new SimpleAdapter(this, filledMaps, R.layout.results, from, to);
 	        lv.setAdapter(adapter);

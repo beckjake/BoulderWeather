@@ -40,6 +40,15 @@ public class WeatherMap {
 	
 	//add a list of values for a weather attribute
 	public void insertValues(String key, List<String> value){
+		
+		//go through it and remove all the empty strings
+		for(String val : value){
+			if(val.replaceAll("[ \t]","").length()==0){
+				value.remove(val);
+			}
+		}
+		
+		//now put our values in the list
 		this.map.put(key, value);
 	}
 	
