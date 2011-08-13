@@ -1,5 +1,6 @@
 package com.emanlaerton;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,15 +8,19 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.Activity;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.os.SystemClock;
 
 
@@ -91,9 +96,14 @@ public class BoulderWeather extends Activity {
 		try{
 			HttpResponse response = client.execute(request);
 			weatherMap = WeatherHelper.read(response);
-		}catch(Exception ex){
+		}catch(UnknownHostException ex){
 			ex.printStackTrace();
-			weatherMap = null;
+			Log.w(prefix,"Probably couldn't connect to the internet");
+			Toast.makeText(getApplicationContext(),"Could not connect! Is your internet connection down?", Toast.LENGTH_SHORT).show();
+			return null;
+    	}catch(Exception ex){
+			ex.printStackTrace();
+			return null;
 		}
 		
 		return weatherMap;
@@ -106,7 +116,8 @@ public class BoulderWeather extends Activity {
         final TextView date = (TextView) findViewById(R.id.weather_date);
 		if(wm==null){
 			Log.w(prefix,"Warning, Map was not returned properly!");
-			date.setText("No results!");
+			Toast.makeText(getApplicationContext(),"Weather data could not be found!", Toast.LENGTH_SHORT).show();
+			date.setText("No results! Check your internet connection.");
 		}else{
 			ListView lv= (ListView)findViewById(R.id.listview);
 	        String[] from = new String[] { "Type", "Current", "Minimum", "Maximum", "Average" };
@@ -133,4 +144,31 @@ public class BoulderWeather extends Activity {
 		}
     	return true;
     }
+    
+    /* Make menu stuff happen */
+	 @Override
+	    public boolean onCreateOptionsMenu(Menu menu) {
+	    	//Load Menu
+	       	MenuInflater inflater = getMenuInflater();
+	        inflater.inflate(R.menu.menu, menu);
+	        return true;
+	    }
+	 @Override
+	    public boolean onOptionsItemSelected(MenuItem item) {
+	        switch (item.getItemId()) {
+	            case R.id.quit:
+	            Log.w(prefix,"Moving to back");
+	            					//we shouldn't quit, so instead we'll fake it
+	            					this.moveTaskToBack(true);
+	                                break;
+	            case R.id.refresh:
+	            Log.w(prefix,"Refreshing...");
+									lastRefresh=SystemClock.elapsedRealtime();
+									weatherMap = getWeather(ATOC_URL);
+									drawScreen(weatherMap);
+									break;
+	        }
+	        return true;
+	    }
+    
 }

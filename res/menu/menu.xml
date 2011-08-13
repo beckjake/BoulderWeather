@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item 
+		android:id="@+id/refresh"
+		android:title="Refresh Weather Data"
+		android:icon="@drawable/icon" />
+	<item 
+		android:id="@+id/quit"
+		android:title="Exit BoulderWeather"
+		android:icon="@drawable/icon" />
+</menu>
+

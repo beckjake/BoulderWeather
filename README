@@ -5,8 +5,7 @@ There are two ways to download this file:
 	- the binary on the Downloads page, which has had Log statements stripped out. This is guaranteed stable-ish. (as of this release).
 
 
-Version: 1.0 "final"
+Version: 1.1b1
 
 TODO for v1.1:
 	get the last couple lines of the table (currently ignored)
-	Add menu w/ exit button, maybe refresh too?
