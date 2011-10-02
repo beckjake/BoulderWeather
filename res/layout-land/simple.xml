@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+        <TextView android:id="@+id/Key"
+        	android:text="Stat"
+        	android:layout_height="fill_parent"
+        	android:layout_width="wrap_content"
+        	android:width="150dip"
+        />
+        <TextView android:id="@+id/Value"
+	        android:text="Val"
+	        android:layout_height="fill_parent"
+	        android:layout_width="wrap_content"
+	        android:width="40dip"
+	    />
+</LinearLayout> 

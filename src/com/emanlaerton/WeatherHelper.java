@@ -1,13 +1,10 @@
 package com.emanlaerton;
 
 import java.io.BufferedReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.apache.http.HttpResponse;
-import android.util.Log;
-
+//import android.util.Log;
 /*
  * This function scrapes the page it is passed (sure hope it's the atoc1 page) and converts it into a WeatherMap.
  */
@@ -48,7 +45,7 @@ public class WeatherHelper {
     	String weirdLine = "</td> <td>"; //this handles problem lines
     	String delims[] = {currentLine,minLine,maxLine,avgLine,endLine};
     	String Label;
-    	List<String> values = new ArrayList<String>();
+    	String values[];
     	WeatherMap wm = null;
     	try {
     		int startCut = pageHTML.indexOf("<table border");
@@ -74,10 +71,11 @@ public class WeatherHelper {
     		
     		//we want 9 rows
     		for(int i=0;i<9;i++){
-    			values = new ArrayList<String>();
+    			values = new String[4];
+    			Integer loc=0;
     			//endCut is the character at the start of the first instance of "</th> <td align=center>"
     			endCut = pageHTML.indexOf(delims[0]);
-    			//Label is from the start of the th align left statement to the end cut - the label!
+    			//Label is from the start of the the align left statement to the end cut - the label!
     			Label = pageHTML.substring(0, endCut).trim();
     			pageHTML = pageHTML.substring(endCut+delims[0].length());
     			//delims.length=4, or so we hope (cur, min, max, avg)
@@ -91,8 +89,7 @@ public class WeatherHelper {
     						break;
     					}
     				}
-    				String addval = pageHTML.substring(0,endCut).replaceAll("[ \t]",""); 
-    				values.add(addval);
+    				values[loc++] = pageHTML.substring(0,endCut).replaceAll("[ \t]",""); 
     				pageHTML = pageHTML.substring(endCut+delims[j+1].length());
     			}
         		startCut = pageHTML.indexOf(labelLine);
@@ -104,7 +101,7 @@ public class WeatherHelper {
 			pageHTML = "Error, things went wrong somewhere in parsing";
 			e.printStackTrace();
 		}
-		//Log.i(prefix,"Result: "+pageHTML);
+		////Log.i(prefix,"Result: "+pageHTML);
     	return wm;
     }
 } 

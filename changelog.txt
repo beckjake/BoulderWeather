@@ -19,3 +19,7 @@ v 1.1
 	- Added menu functionality
 	- Added support for remaining table rows
 
+v 1.2
+	- Added simple view and set it to default
+	- Altered WeatherMap to more easily support the simple view
+	- Added menu option to switch between simple and detailed view

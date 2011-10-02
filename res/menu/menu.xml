@@ -1,10 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item 
-		android:id="@+id/refresh"
+		android:id="@+id/Refresh"
 		android:title="Refresh Weather Data"
 		android:icon="@drawable/icon" />
+	<item
+		android:id="@+id/Switch"
+		android:title="Switch view"
+		android:icon="@drawable/icon" />
 	<item 
-		android:id="@+id/quit"
+		android:id="@+id/Quit"
 		android:title="Exit BoulderWeather"
 		android:icon="@drawable/icon" />
 </menu>
