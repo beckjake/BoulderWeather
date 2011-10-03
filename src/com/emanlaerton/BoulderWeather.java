@@ -30,6 +30,7 @@ public class BoulderWeather extends Activity {
 	private final static long REFRESH_TIMEOUT = 5 * MINUTE; //sounds about right
 	private final static String ATOC_URL = "http://foehn.colorado.edu/weather/atoc1/"; 
 	TextView date = null;
+	TextView viewText = null;
 	private static long lastRefresh=0;
 	private static final String prefix = "BoulderWeather";
 	private volatile static WeatherMap weatherMap = null; //A Map of the weather, get it? I kill me.
@@ -46,7 +47,8 @@ public class BoulderWeather extends Activity {
         Button svone = (Button) findViewById(R.id.svone);
         Button svtwo = (Button) findViewById(R.id.svtwo);
         Button svthree = (Button) findViewById(R.id.svthree);
-        
+        viewText = (TextView) findViewById(R.id.weather_mode);
+        viewText.setText(getView(view)+" Weather");
 	    refresh.setOnClickListener(new View.OnClickListener(){
 			public void onClick(View v) {
 				lastRefresh=SystemClock.elapsedRealtime();
@@ -190,7 +192,9 @@ public class BoulderWeather extends Activity {
         	sv[i].setText(text);
         }
         view = newView;
-    	
+        if(viewText!=null){
+        	viewText.setText(getView(view)+" Weather");
+        }
     	
     	return true;
     }

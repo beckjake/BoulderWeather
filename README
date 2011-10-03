@@ -5,7 +5,9 @@ There are two ways to download this file:
 	- the binary on the Downloads page, which has had Log statements stripped out. This is guaranteed stable-ish. (as of this release).
 
 
-Version: 1.2
+Version: 1.3
 
-Todo for 1.3: Fix the ugliness of the button row.
-
+Todo for future versions:
+    Icons
+    Clean up the horrible html scraping job I do
+    "Graph view" that scrapes the graphs from the page as well.
