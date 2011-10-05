@@ -28,3 +28,6 @@ v 1.3
 	- Made buttons less horrible looking (spacing!)
 	- Addded Mode dialog ("Current Weather", "Minimum Weather", etc)
 	- Made it so simple view shows min/max times on the same line (un-squished the column)
+
+v1.3.1
+	- Bug fix to landscape layout... I think.
